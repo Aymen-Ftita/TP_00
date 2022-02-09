@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h1>Table de multiplication</h1>
+
+
+<button onclick="multiplication()">Click me</button>
+
+<p id="table"></p>
+
+<script>
+function multi(){
+ for (var i = 1; i <=10;i++){
+     var res = nombre * i ;
+     document.getElementById("table").innerHTML +=  res;
+ }
+  
+}
+function multiplication() {
+    var nombre=window.prompt("Entrez le numéro de la table:","Saisir un entier ici");
+    for (var i = 1; i <=10;i++){
+        var res = nombre * i ;
+        document.getElementById("table").innerHTML +=  res + "\n" ;
+    }
+}
+</script>
+
+</body>
+</html>
