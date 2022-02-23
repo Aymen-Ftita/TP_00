@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charest="UTF=8">
+        <title>  joueur</title>
+         <meta name="viewport" content="width=device-width, initial-scale=1">
+           <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> 
+    </head>
+    <body>
+        <nav id="navbar">
+            <a class="pers" ref="">  <center> Consulter votre joueur  </center></a>
+                <style>
+            #navbar {
+                overflow: hidden;
+                background-color: #333;
+              }
+              
+              #navbar a {
+                float: left;
+                display: block;
+                color: #f2f2f2;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+                font-size: 17px;
+              }
+              
+              #navbar a:hover {
+                background-color: #ddd;
+                color: black;
+              }
+              
+              #navbar a.active {
+                background-color: #04AA6D;
+                color: white;
+              }
+              </style>
+        </nav>
+
+        <div class="w3-panel w3-blue">
+            <h1 class="w3-panel w3-blue" style="text-shadow:1px 1px 0 #444">
+                <b><center>rechercher votre joueur</center></b></h1>
+              </div>
+
+        <p>Please choose:</p>
+  <input type="radio" id="personne" name="personne" value="joueur">
+  <label class="container" for="personne">joueur</label><br>
+  <input type="radio" id="adversaire" name="personne" value="adversaire">
+  <p class="checkmark" id="C1"></p>
+  <label class="container" for="adversaire">adversaire</label><br>  
+  <button id="btn" onclick="affiche()">Afficher</button>
+  <p class="checkmark" id="C2"></p>
+  <style>
+  .container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 15px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  
+
+  .container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+  }
+  
+ 
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+    border-radius: 50%;
+  }
+  
+ 
+  .container:hover input ~ .checkmark {
+    background-color: #ccc;
+  }
+  
+ 
+  .container input:checked ~ .checkmark {
+    background-color:purple;
+  }
+  
+ 
+  .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+  }
+  
+  
+  .container input:checked ~ .checkmark:after {
+    display: block;
+  }
+  
+
+  .container .checkmark:after {
+       top: 9px;
+      left: 9px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: white;
+  }
+  </style>
+<script src="class.js"></script>
+<script src="main1.js"></script>
+    </body>
+</html>
