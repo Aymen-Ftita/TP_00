@@ -34,8 +34,8 @@ function geolocation(){
              //affichage des données meteo actuelles
              document.getElementById("container1").innerHTML = "<h1>"+"&bull; "+"city :"+" " + data.name+"</h1>"+"<br>" + "<h1 >"+"&bull; "+
              "Current Temperature :"+ Math.trunc(data.main.temp) +" "+"°"+
-             "</h1>" + "<br>" + "<h1>"+"&bull; "+"wind speed :"+" "+data.wind.speed+"</h1>"+"<br>"
-             + "<h1>"+"&bull; "+"Humidity :"+data.main.humidity+"</h1>"+"<br>"+
+             "</h1>" + "<br>" + "<h1>"+"&bull; "+"wind speed :"+" "+data.wind.speed+""+"k/h"+"</h1>"+"<br>"
+             + "<h1>"+"&bull; "+"Humidity :"+data.main.humidity+"%"+"</h1>"+"<br>"+
              "<h1>"+"&bull; "+"Current clouds :"+" "+data.weather[0].description +"</h1>"+"<br>"+"<h1>"+"&bull; "+"Pressure :"+" " + data.main.pressure+"</h1>";})
              
                    
