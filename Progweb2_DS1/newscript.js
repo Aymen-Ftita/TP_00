@@ -1,4 +1,3 @@
-
 const CLEFAPI = '0f629a889c1f0dab2187a09af8b39cbd';
 let resultatsAPI;
 
@@ -11,7 +10,7 @@ function geolocation(){
             let lat = position.coords.latitude;
             
             AppelAPI(text);
-            AppelAPI2(long, lat)
+            AppelAPI2(long, lat);
     
         }, () => {
             alert(`Vous avez refusé la géolocalisation, l'application ne peut pas fonctionner, veuillez l'activer.!`)
@@ -20,9 +19,10 @@ function geolocation(){
 
     // recuperation des données (fetch()) par nom de ville
 
-    function AppelAPI(text) {
-    
+    function AppelAPI(text){
+        
         fetch(`https://api.openweathermap.org/data/2.5/weather?q=${text}&exclude=minutely&units=metric&appid=${CLEFAPI}`)
+
         .then((reponse) => {
             return reponse.json();
         })
@@ -31,10 +31,11 @@ function geolocation(){
              console.log(data);
              
              
-             //affichage des données meteo actuelles
+             // affichage des données meteo actuelles
+            
              document.getElementById("container1").innerHTML = "<h1>"+"&bull; "+"city :"+" " + data.name+"</h1>"+"<br>" + "<h1 >"+"&bull; "+
              "Current Temperature :"+ Math.trunc(data.main.temp) +" "+"°"+
-             "</h1>" + "<br>" + "<h1>"+"&bull; "+"wind speed :"+" "+data.wind.speed+""+"k/h"+"</h1>"+"<br>"
+             "</h1>" + "<br>" + "<h1>"+"&bull; "+"wind speed :"+" "+data.wind.speed+" "+"k/h"+"</h1>"+"<br>"
              + "<h1>"+"&bull; "+"Humidity :"+data.main.humidity+"%"+"</h1>"+"<br>"+
              "<h1>"+"&bull; "+"Current clouds :"+" "+data.weather[0].description +"</h1>"+"<br>"+"<h1>"+"&bull; "+"Pressure :"+" " + data.main.pressure+"</h1>";})
              
@@ -53,10 +54,10 @@ function geolocation(){
 
             console.log(data);
 
-             //affichage la prevision de la semaine
+             //affichage de la prevision de la semaine
 
              let d = new Date();
-             let day = d.getDay(); 
+             let day = d.getDay();
              let days = ["DIM","LUN","MAR","MER","JEU","VEN","SAM"];
 
              let dail = "<tr>";
@@ -84,9 +85,9 @@ function geolocation(){
 
              //affichage la prevision de la journée chaque 3 heures
              let CurrentH = new Date().getHours();
-             console.log(CurrentH);
+             //console.log(CurrentH);
 
-             houly = "<tr>" + "<th>"+ CurrentH+"h" +"</th>";
+             houly = "<tr>" + "<th>"+ CurrentH +" h" +"</th>";
              hour = CurrentH;
              j=0;
              for(let j = 0; j < 7;j++)
@@ -95,7 +96,7 @@ function geolocation(){
                     hour = hour + 3;
                 if (hour < 24){
                     
-                    houly += hour+"h" + "</th>";
+                    houly += hour+" h" + "</th>";
                 }/*else if(hour === 24){
                     hour = "00h";
                     houly += hour + "</th>";
@@ -103,7 +104,7 @@ function geolocation(){
                 }*/else if(hour >= 24){
                     
                     hour -= 24 ;
-                    houly += "0"+hour+"h" +"</th>" ;
+                    houly += "0"+hour+" h" +"</th>" ;
                 }
 
             }
@@ -114,13 +115,17 @@ function geolocation(){
             
             ) }
     // dés on clique sur le boutton
+    let ville = ["TUNIS","TATAOUINE","KASSERINE","MEDENINE","NABEUL","GAFSA","GABES","MAHDIA","SOUSSE","MONASTIR","JENDOUBA","SIDI BOU ZID","ARIANA",
+                    "ARYANAH","MANOUBA","BEJA","KEF","TOZEUR","KEBILI","SFAX","BIZERTE","BEN AROUS","ZAGHOUAN","KAIROUAN","SILIANA","DJERBA"];
     function clkhere(){
-        if(!document.getElementById("text").value){alert('Please enter the city name')}
+        let txt=document.getElementById("text").value
+        if(!txt){alert('Please enter the city name')}
+        else if(ville.includes(txt.toUpperCase())===false){alert('CITY NOT FOUND')}
         else{
         text = document.getElementById("text").value;
         geolocation();
         let art = document.getElementById("art");
-        art.innerHTML ="<i>"+ "<h1>" + text +  "</h1>" + "</i>";
+        art.innerHTML ="<i>"+ "<h1>" + text.toUpperCase() +  "</h1>" + "</i>";
         }
     }
     // dés on clique sur les villes sur le map
@@ -129,7 +134,7 @@ function geolocation(){
         geolocation();
         
         let art = document.getElementById("art");
-        art.innerHTML ="<i>"+ "<h1>" + Tataouine.id +  "</h1>" + "</i>";
+        art.innerHTML ="<i>"+ "<h1>" + text +  "</h1>" + "</i>";
     }
 
     function afficheTunis(){
