@@ -1,0 +1,20 @@
+/* Bordure simple autour des tableaux */
+table,th, td { border: 1px solid grey;}
+table{border-collapse:collapse;}
+/* Centrage tableau */
+table.centre{ margin:auto;}
+/* centrage du texte dans les cellules du tableau */
+table.centre td{text-align:center;}
+table#jolie tr:first-child{
+background:LightPink;
+}
+table#jolie tr:nth-child(2n){
+background:#EFD3C9;
+}
+table#jolie tr:nth-child(2n+3){
+background:#BCBCD0;
+}
+/* si un tableau a une seule ligne on l'affiche en rouge */
+table tr:only-child{
+background:red;
+}
