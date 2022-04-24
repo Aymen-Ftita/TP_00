@@ -130,7 +130,7 @@ $M->create();
           <input type="password" name="pass" id="passI" class="form-control">
         </div>
         <div class="form-group">
-          <button type="submit" class="btn btn-info">Create a person</button>
+          <button type="submit" class="btn btn-info" onclick="clkhere2()">Create a person</button>
         </div>
       </form>
     </div>
