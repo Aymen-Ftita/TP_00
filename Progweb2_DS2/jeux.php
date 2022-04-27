@@ -21,12 +21,15 @@ session_start();
  
  $M=new Manager();
  $J1=$M->get($p);
-   
+ $msg=""; 
 
-    if (isset($_POST['pari']) && isset($_POST['pair']))
-    {   
-        $p2=$_POST['gh'];
-        $J2=$M->get($p2);
+    if (isset($_POST['pari']) && isset($_POST['pair']) )
+    {   if($_POST['pari']>$J1->getnbrJ() )
+        {   $msg="Ne peut pas mettre cet nombre de Jeton , Il faut un nombre inferieur ou egale a <strong>".$J1->getnbrJ()."</strong>";  }
+        else if(empty($_POST['pari'])  || $_POST['gh']=="0"){$msg="Ne laisse pas les champs vides , il faut les remplir !!";}
+        else
+           { $p2=$_POST['gh'];
+            $J2=$M->get($p2);
         if($_POST['pari']%2 == 0)
         {
 
@@ -34,29 +37,33 @@ session_start();
             $J2->setnbrJ($J2->getnbrJ()+$_POST['pari']);
             $M->update($J1);
             $M->update($J2);
-            echo "<h1><span>".$J2->getPseudo()." WIN <span> :(<h1>";
+            echo "<h1><span>".$J2->getPseudo()." WIN this round <span> :(<h1>";
             // var_dump($J1);
             // var_dump($J2);
 
         }
         else{
-            echo "<h1><span>".$J1->getPseudo()." WIN <span> ;)<h1>";
+            echo "<h1><span>".$J1->getPseudo()." WIN this round <span> ;)<h1>";
             $J1->setnbrJ($J1->getnbrJ()+$_POST['pari']);
             $J2->setnbrJ($J2->getnbrJ()-$_POST['pari']);
             $M->update($J1);
             $M->update($J2); 
-        }
+        }}
     }
 
 
     if (isset($_POST['pari']) && isset($_POST['impair']))
     {   
+        if($_POST['pari']>$J1->getnbrJ())
+        {   $msg="Ne peut pas mettre cet nombre de Jeton , Il faut un nombre inferieur ou egale a <strong>".$J1->getnbrJ()."</strong>";  }
+        else if(empty($_POST['pari'])  || $_POST['gh']=="0"){$msg="Ne laisse pas les champs vides , il faut les remplir !!";}
+        else 
+           {
         $p2=$_POST['gh'];
         $J2=$M->get($p2);
         if($_POST['pari']%2 == 0)
         {
-            if(($J1->getnbrJ())>=0 )
-            {
+            
                 echo "<h1><span>".$J1->getPseudo()." WIN this round <span> ;)<h1>";
                 $J1->setnbrJ($J1->getnbrJ()+$_POST['pari']);
                 $J2->setnbrJ($J2->getnbrJ()-$_POST['pari']);
@@ -64,20 +71,17 @@ session_start();
                 $M->update($J2);
                 // var_dump($J1);
                 // var_dump($J2);
-            }
-            else
-            {
-                echo "<h1><span>".$J1->getPseudo()." WIN the Game<span> ;)<h1>";
-            }
+            
+            
 
         }
         else{
-            echo "<h1><span>".$J2->getPseudo()." WIN <span> :(<h1>";
+            echo "<h1><span>".$J2->getPseudo()." WIN this round <span> :(<h1>";
             $J1->setnbrJ($J1->getnbrJ()-$_POST['pari']);
             $J2->setnbrJ($J2->getnbrJ()+$_POST['pari']);
             $M->update($J1);
             $M->update($J2); 
-        }
+        }}
     }
 
 
@@ -93,7 +97,9 @@ session_start();
 </head>
 <style>
     body{
-        background-image: url("back.png");
+        background-image: url("back.png") ;
+        width:auto;
+        height: auto;
     }
     h1{
         color: #fff;
@@ -105,6 +111,7 @@ session_start();
         color: #fff;
         margin-top: 50px;
         margin-bottom: 30px;
+        
     }
     .con{
         width: 100%;
@@ -120,6 +127,11 @@ session_start();
         width:500px;
         margin-left: 35%;
     }
+    .w{
+        width: 500px;
+        margin-left: 35%;
+        margin-top:100px;
+    }
 </style>
 <body>
     <h1><?php echo "Welcom <span>". $J1->getPseudo()."</span>"; ?></h1>
@@ -129,14 +141,14 @@ session_start();
             <h3>choose your enemy :</h3>
             
             <select class="form-select form-select-lg mb-3 sel" aria-label="Default select example" name="gh">
-                <option selected>Choisir un Joueur</option>
+                <option value="0" selected>Choisir un Joueur</option>
             <?php
             $_SESSION['perso']=$_POST['perso'];
             // require ("joueur.class.php");
             // $j = new joueur(getId(),getPseudo());
-                $sql = "SELECT Pseudo FROM joueur" ;
-                foreach ($connexion->query($sql) as $row)
-                echo "<option value=".$row['Pseudo'].">".$row['Pseudo']."</option>";
+                $sql = "SELECT Pseudo  FROM joueur" ;
+                foreach ($connexion->query($sql) as $row) 
+                echo "<option value=".$row['Pseudo'].">".$row['Pseudo'].$row['Id']."</option>";
             ?>   
             </select>
                 
@@ -148,11 +160,53 @@ session_start();
         <input type="number" name="pari">
         <input  type="submit" class="btn " name="pair" value="PAIR">
         <input  type="submit" class="btn " name="impair" value="IMPAIR">
+        <?php if(!empty($msg)): ?>
+        <div class="alert alert-danger w">
+          <?php echo $msg; ?>
+        </div>
+        <?php endif; ?>
         <?php 
-            if (isset($_POST['pari']) && isset($_POST['pair']))
-                {echo "<h3> Le Score de ". $J2->getPseudo() . " est : ".$J2->getnbrJ()."</h3>";}
-            if (isset($_POST['pari']) && isset($_POST['impair']))
-                {echo "<h3> Le Score de ". $J2->getPseudo() . " est : ".$J2->getnbrJ()."</h3>";}
+            if (isset($_POST['pari']) && isset($_POST['pair']) && empty($msg))
+                {
+                    if($J1->getnbrJ()<=0  )
+                    {
+                        echo "<h3> Le Score de ". $J2->getPseudo() . " est : ".$J2->getnbrJ()."</h3>";
+                        echo "<h1><span>".$J2->getPseudo()." WIN the GAME <span> :)<h1>";
+                        $J2->setnbrJ(10);
+                        $M->update($J2);
+                        $J1->setnbrJ(10);
+                        $M->update($J1);}
+                    else if($J2->getnbrJ()<=0)
+                    {
+                        echo "<h3> Le Score de ". $J2->getPseudo() . " est : ".$J2->getnbrJ()."</h3>";
+                        echo "<h1><span>".$J1->getPseudo()." WIN the GAME <span> :)<h1>";
+                        $J2->setnbrJ(10);
+                        $M->update($J2);
+                        $J1->setnbrJ(10);
+                        $M->update($J1);
+                    }
+                    else{echo "<h3> Le Score de ". $J2->getPseudo() . " est : ".$J2->getnbrJ()."</h3>";}
+                }
+            if (isset($_POST['pari']) && isset($_POST['impair']) && empty($msg))
+                {if($J1->getnbrJ()<=0  )
+                    {
+                        echo "<h3> Le Score de ". $J2->getPseudo() . " est : ".$J2->getnbrJ()."</h3>";
+                        echo "<h1><span>".$J2->getPseudo()." WIN the GAME <span> :)<h1>";
+                        $J2->setnbrJ(10);
+                        $M->update($J2);
+                        $J1->setnbrJ(10);
+                        $M->update($J1);}
+                    else if($J2->getnbrJ()<=0)
+                    {
+                        echo "<h3> Le Score de ". $J2->getPseudo() . " est : ".$J2->getnbrJ()."</h3>";
+                        echo "<h1><span>".$J1->getPseudo()." WIN the GAME <span> :)<h1>";
+                        $J2->setnbrJ(10);
+                        $M->update($J2);
+                        $J1->setnbrJ(10);
+                        $M->update($J1);
+                    }
+                    else{echo "<h3> Le Score de ". $J2->getPseudo() . " est : ".$J2->getnbrJ()."</h3>";}
+                }
         ?>
         </form>
         <?php   
